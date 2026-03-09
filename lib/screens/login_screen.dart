@@ -1,55 +1,170 @@
 import 'package:flutter/material.dart';
 import 'dashboard_screen.dart';
 import 'register_screen.dart';
+import 'forgot_password_screen.dart';
 
 class LoginScreen extends StatelessWidget {
+
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      appBar: AppBar(title: Text("GatherPay Login")),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
+      backgroundColor: Colors.white,
 
-            TextField(
-              controller: emailController,
-              decoration: InputDecoration(labelText: "Email"),
-            ),
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(25),
 
-            SizedBox(height: 15),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
 
-            TextField(
-              controller: passwordController,
-              decoration: InputDecoration(labelText: "Password"),
-              obscureText: true,
-            ),
+              /// Logo
+              const Icon(
+                Icons.account_balance_wallet,
+                size: 70,
+                color: Colors.black,
+              ),
 
-            SizedBox(height: 25),
+              const SizedBox(height: 10),
 
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => DashboardScreen()),
-                );
-              },
-              child: Text("Login"),
-            ),
+              /// App Name
+              const Text(
+                "GatherPay",
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
 
-            TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => RegisterScreen()),
-                );
-              },
-              child: Text("Create Account"),
-            )
-          ],
+              const SizedBox(height: 5),
+
+              Text(
+                "Pool money with friends easily",
+                style: TextStyle(
+                  color: Colors.grey[600],
+                ),
+              ),
+
+              const SizedBox(height: 40),
+
+              /// Login Card
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.grey[100],
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 10,
+                      spreadRadius: 2,
+                    )
+                  ],
+                ),
+
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+                    /// Email Field
+                    TextField(
+                      controller: emailController,
+                      decoration: const InputDecoration(
+                        labelText: "Email",
+                        prefixIcon: Icon(Icons.email),
+                      ),
+                    ),
+
+                    const SizedBox(height: 15),
+
+                    /// Password Field
+                    TextField(
+                      controller: passwordController,
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                        labelText: "Password",
+                        prefixIcon: Icon(Icons.lock),
+                      ),
+                    ),
+
+                    const SizedBox(height: 5),
+
+                    /// Forgot Password (LEFT aligned)
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                      ),
+                      onPressed: () {
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ForgotPasswordScreen(),
+                          ),
+                        );
+
+                      },
+                      child: const Text(
+                        "Forgot Password?",
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    /// Login Button
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => DashboardScreen(),
+                            ),
+                          );
+
+                        },
+                        child: const Text("Login"),
+                      ),
+                    ),
+
+                    const SizedBox(height: 15),
+
+                    /// Create Account
+                    Center(
+                      child: GestureDetector(
+                        onTap: () {
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => RegisterScreen(),
+                            ),
+                          );
+
+                        },
+                        child: const Text(
+                          "Create Account",
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    )
+
+                  ],
+                ),
+              )
+
+            ],
+          ),
         ),
       ),
     );
