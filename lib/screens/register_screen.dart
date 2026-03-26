@@ -1,160 +1,135 @@
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
+
   @override
-  _RegisterScreenState createState() => _RegisterScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
   void registerUser() {
-
     if (passwordController.text != confirmPasswordController.text) {
-
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text("Passwords do not match"),
           backgroundColor: Colors.red,
         ),
       );
-
       return;
     }
 
-    /// Continue with registration
     print("User Registered");
-
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      backgroundColor: Colors.white,
-
+      appBar: AppBar(
+        title: const Text("Create Account"),
+      ),
       body: Center(
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(25),
-
+          padding: const EdgeInsets.all(25),
           child: Column(
             children: [
-
-              Icon(
+              const Icon(
                 Icons.person_add,
                 size: 70,
                 color: Colors.black,
               ),
-
-              SizedBox(height: 10),
-
-              Text(
+              const SizedBox(height: 10),
+              const Text(
                 "Create Account",
                 style: TextStyle(
                   fontSize: 26,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-
-              SizedBox(height: 5),
-
-              Text(
+              const SizedBox(height: 5),
+              const Text(
                 "Join GatherPay and start pooling money",
-                style: TextStyle(
-                  color: Colors.grey[600],
-                ),
+                style: TextStyle(color: Colors.black),
               ),
-
-              SizedBox(height: 40),
-
+              const SizedBox(height: 40),
               Container(
-                padding: EdgeInsets.all(20),
-
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.grey[100],
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
+                  border: Border.all(color: Colors.black, width: 1.5),
+                  boxShadow: const [
                     BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 10,
-                    )
+                      color: Colors.black,
+                      blurRadius: 0,
+                      offset: Offset(6, 6),
+                    ),
                   ],
                 ),
-
                 child: Column(
                   children: [
-
-                    /// Name
                     TextField(
                       controller: nameController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: "Name",
                         prefixIcon: Icon(Icons.person),
                       ),
                     ),
-
-                    SizedBox(height: 15),
-
-                    /// Email
+                    const SizedBox(height: 15),
                     TextField(
                       controller: emailController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: "Email",
                         prefixIcon: Icon(Icons.email),
                       ),
                     ),
-
-                    SizedBox(height: 15),
-
-                    /// Password
+                    const SizedBox(height: 15),
                     TextField(
                       controller: passwordController,
                       obscureText: true,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: "Password",
                         prefixIcon: Icon(Icons.lock),
                       ),
                     ),
-
-                    SizedBox(height: 15),
-
-                    /// Confirm Password
+                    const SizedBox(height: 15),
                     TextField(
                       controller: confirmPasswordController,
                       obscureText: true,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: "Confirm Password",
                         prefixIcon: Icon(Icons.lock_outline),
                       ),
                     ),
-
-                    SizedBox(height: 25),
-
+                    const SizedBox(height: 25),
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: registerUser,
-                        child: Text("Register"),
+                        child: const Text("Register"),
                       ),
                     ),
-
                   ],
                 ),
               ),
-
-              SizedBox(height: 20),
-
+              const SizedBox(height: 20),
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text("Already have an account? Login"),
-              )
-
+                child: const Text(
+                  "Already have an account? Login",
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    decorationColor: Colors.black,
+                  ),
+                ),
+              ),
             ],
           ),
         ),

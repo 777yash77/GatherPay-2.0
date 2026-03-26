@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
+import 'contribute_screen.dart';
 
 class PoolDetailsScreen extends StatefulWidget {
+  const PoolDetailsScreen({super.key, required this.pool});
 
   final Map<String, dynamic> pool;
-
-  const PoolDetailsScreen({super.key, required this.pool});
 
   @override
   State<PoolDetailsScreen> createState() => _PoolDetailsScreenState();
 }
 
 class _PoolDetailsScreenState extends State<PoolDetailsScreen> {
-
   late String poolName;
   late int targetAmount;
   late int collected;
 
-  String admin = "Rahul";
+  final String admin = "Rahul";
 
-  List<Map<String, dynamic>> members = [
+  final List<Map<String, dynamic>> members = [
     {"name": "Rahul", "amount": 200},
     {"name": "Arun", "amount": 5000},
     {"name": "Vikram", "amount": 1000},
@@ -28,7 +27,6 @@ class _PoolDetailsScreenState extends State<PoolDetailsScreen> {
   @override
   void initState() {
     super.initState();
-
     poolName = widget.pool["name"];
     targetAmount = widget.pool["target"];
     collected = widget.pool["collected"];
@@ -36,25 +34,18 @@ class _PoolDetailsScreenState extends State<PoolDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    double progress = collected / targetAmount;
-
-    int perPersonAmount = targetAmount ~/ members.length;
+    final double progress = collected / targetAmount;
+    final int perPersonAmount = targetAmount ~/ members.length;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text("Pool Details"),
-        backgroundColor: Colors.black,
       ),
-
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
-
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-            /// Pool Name
             Text(
               poolName,
               style: const TextStyle(
@@ -62,37 +53,39 @@ class _PoolDetailsScreenState extends State<PoolDetailsScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-
             const SizedBox(height: 15),
-
-            /// Pool Progress
-            LinearProgressIndicator(
-              value: progress,
-              color: Colors.black,
-              backgroundColor: Colors.grey[300],
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: LinearProgressIndicator(
+                minHeight: 12,
+                value: progress,
+                color: Colors.black,
+                backgroundColor: Colors.white,
+              ),
             ),
-
             const SizedBox(height: 10),
-
             Text(
-              "₹$collected / ₹$targetAmount",
+              "Rs.$collected / Rs.$targetAmount",
               style: const TextStyle(fontSize: 16),
             ),
-
             const SizedBox(height: 20),
-
-          ElevatedButton(
-  style: ElevatedButton.styleFrom(
-    backgroundColor: Colors.black,
-    foregroundColor: Colors.white,
-  ),
-  onPressed: () {},
-  child: const Text("Contribute Money"),
-),
-
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => ContributeScreen(
+                        remainingAmount: targetAmount - collected,
+                      ),
+                    ),
+                  );
+                },
+                child: const Text("Contribute Money"),
+              ),
+            ),
             const SizedBox(height: 30),
-
-            /// Admin Section
             const Text(
               "Admin",
               style: TextStyle(
@@ -100,10 +93,9 @@ class _PoolDetailsScreenState extends State<PoolDetailsScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-
             const SizedBox(height: 10),
-
             ListTile(
+              contentPadding: EdgeInsets.zero,
               leading: CircleAvatar(
                 backgroundColor: Colors.black,
                 child: Text(
@@ -114,10 +106,7 @@ class _PoolDetailsScreenState extends State<PoolDetailsScreen> {
               title: Text(admin),
               subtitle: const Text("Pool Creator"),
             ),
-
             const SizedBox(height: 25),
-
-            /// Members Section
             const Text(
               "Members Contributions",
               style: TextStyle(
@@ -125,21 +114,14 @@ class _PoolDetailsScreenState extends State<PoolDetailsScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-
             const SizedBox(height: 10),
-
             Column(
               children: members.map((member) {
-
-                int paid = member["amount"];
+                final int paid = member["amount"];
+                final bool isPaid = paid >= perPersonAmount;
 
                 return Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-
                   child: ListTile(
-
                     leading: CircleAvatar(
                       backgroundColor: Colors.black,
                       child: Text(
@@ -147,39 +129,31 @@ class _PoolDetailsScreenState extends State<PoolDetailsScreen> {
                         style: const TextStyle(color: Colors.white),
                       ),
                     ),
-
                     title: Text(member["name"]),
-
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-
-                        Text("₹$paid / ₹$perPersonAmount"),
-
+                        Text("Rs.$paid / Rs.$perPersonAmount"),
                         const SizedBox(height: 6),
-
-                        LinearProgressIndicator(
-                          value: paid / perPersonAmount,
-                          backgroundColor: Colors.grey[300],
-                          color: Colors.black,
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: LinearProgressIndicator(
+                            minHeight: 8,
+                            value: paid / perPersonAmount,
+                            backgroundColor: Colors.white,
+                            color: Colors.black,
+                          ),
                         ),
                       ],
                     ),
-
                     trailing: Icon(
-                      paid >= perPersonAmount
-                          ? Icons.check_circle
-                          : Icons.pending,
-                      color: paid >= perPersonAmount
-                          ? Colors.green
-                          : Colors.orange,
+                      isPaid ? Icons.check_circle : Icons.circle_outlined,
+                      color: Colors.black,
                     ),
                   ),
                 );
-
               }).toList(),
-            )
-
+            ),
           ],
         ),
       ),

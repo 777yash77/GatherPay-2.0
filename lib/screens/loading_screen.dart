@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'dashboard_screen.dart';
 
 class LoadingScreen extends StatefulWidget {
+  const LoadingScreen({super.key});
+
   @override
-  _LoadingScreenState createState() => _LoadingScreenState();
+  State<LoadingScreen> createState() => _LoadingScreenState();
 }
 
 class _LoadingScreenState extends State<LoadingScreen>
     with SingleTickerProviderStateMixin {
-
   late AnimationController controller;
 
   @override
@@ -21,12 +22,12 @@ class _LoadingScreenState extends State<LoadingScreen>
       duration: const Duration(seconds: 2),
     )..repeat();
 
-    /// Simulate loading
     Timer(const Duration(seconds: 2), () {
+      if (!mounted) return;
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (_) => DashboardScreen(),
+          builder: (_) => const DashboardScreen(),
         ),
       );
     });
@@ -40,23 +41,17 @@ class _LoadingScreenState extends State<LoadingScreen>
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      backgroundColor: Colors.white,
-
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
             const Icon(
               Icons.account_balance_wallet,
               size: 80,
               color: Colors.black,
             ),
-
             const SizedBox(height: 20),
-
             const Text(
               "GatherPay",
               style: TextStyle(
@@ -64,9 +59,7 @@ class _LoadingScreenState extends State<LoadingScreen>
                 fontWeight: FontWeight.bold,
               ),
             ),
-
             const SizedBox(height: 40),
-
             RotationTransition(
               turns: controller,
               child: const Icon(
@@ -75,14 +68,11 @@ class _LoadingScreenState extends State<LoadingScreen>
                 color: Colors.black,
               ),
             ),
-
             const SizedBox(height: 15),
-
             const Text(
               "Loading your pools...",
-              style: TextStyle(color: Colors.grey),
-            )
-
+              style: TextStyle(color: Colors.black),
+            ),
           ],
         ),
       ),

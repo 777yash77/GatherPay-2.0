@@ -1,46 +1,21 @@
 import 'package:flutter/material.dart';
 import 'screens/login_screen.dart';
+import 'theme/app_theme.dart';
 
 void main() {
-  runApp(GatherPayApp());
+  runApp(const GatherPayApp());
 }
 
-class GatherPayApp extends StatefulWidget {
-  @override
-  _GatherPayAppState createState() => _GatherPayAppState();
-}
-
-class _GatherPayAppState extends State<GatherPayApp> {
-
-  bool isDarkMode = false;
-
-  void toggleTheme() {
-    setState(() {
-      isDarkMode = !isDarkMode;
-    });
-  }
+class GatherPayApp extends StatelessWidget {
+  const GatherPayApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "GatherPay",
-
-      theme: ThemeData(
-        brightness: Brightness.light,
-        scaffoldBackgroundColor: Colors.white,
-        primaryColor: Colors.black,
-      ),
-
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        scaffoldBackgroundColor: Color(0xFF121212),
-      ),
-
-      themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
-
-      home: LoginScreen(toggleTheme: toggleTheme),
+      theme: AppTheme.theme,
+      home: LoginScreen(),
     );
   }
 }
